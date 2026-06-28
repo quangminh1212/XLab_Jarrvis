@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__jarrvis__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -File \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\notify.ps1\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__jarrvis__voice_listen",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -File \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\notify.ps1\""
+          }
+        ]
+      }
+    ]
+  }
+}
