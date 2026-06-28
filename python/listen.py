@@ -20,6 +20,29 @@ import wave
 import numpy as np
 import sounddevice as sd
 
+# ── Audio chimes ──────────────────────────────────────────────────────────────
+_CHIME_FS = 44100
+
+def _chime(freq_start: float, freq_end: float, duration: float = 0.25, vol: float = 0.25):
+    """Synthesize and play a short frequency-sweep chime."""
+    try:
+        t = np.linspace(0, duration, int(_CHIME_FS * duration), endpoint=False)
+        freq = np.linspace(freq_start, freq_end, len(t))
+        phase = np.cumsum(2 * np.pi * freq / _CHIME_FS)
+        wave = vol * np.sin(phase)
+        envelope = np.exp(-4 * t / duration)
+        sd.play((wave * envelope).astype(np.float32), _CHIME_FS, blocking=True)
+    except Exception:
+        pass  # Never block on chime failure
+
+def chime_listening():
+    """Rising chime – mic is now active."""
+    _chime(700, 1100)
+
+def chime_done():
+    """Falling chime – done recording."""
+    _chime(1100, 700)
+
 # ── Config from CLI args ──────────────────────────────────────────────────────
 LANGUAGE = sys.argv[1] if len(sys.argv) > 1 else 'vi-VN'
 TIMEOUT = float(sys.argv[2]) if len(sys.argv) > 2 else 30.0
@@ -43,6 +66,7 @@ def record_with_vad() -> np.ndarray | None:
     start_time = time.time()
 
     print(f"[listen] lang={LANGUAGE} timeout={TIMEOUT}s mic={MIC_INDEX}", file=sys.stderr, flush=True)
+    chime_listening()  # rising chime = mic active
 
     while time.time() - start_time < TIMEOUT:
         # Record one chunk
@@ -74,6 +98,7 @@ def record_with_vad() -> np.ndarray | None:
                     print("[listen] silence → end", file=sys.stderr, flush=True)
                     speech_dur = len(buffer) * CHUNK_SEC
                     if speech_dur >= MIN_SPEECH_SEC:
+                        chime_done()  # falling chime = recording complete
                         return np.concatenate(buffer)
                     # Too short – reset and keep listening
                     buffer = []
@@ -83,6 +108,7 @@ def record_with_vad() -> np.ndarray | None:
 
     # Timeout: return whatever speech we have (if any)
     if speaking and len(buffer) * CHUNK_SEC >= MIN_SPEECH_SEC:
+        chime_done()
         return np.concatenate(buffer)
     return None
 
