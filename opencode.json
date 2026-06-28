@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "jarrvis": {
+      "type": "local",
+      "command": ["node", "bin/mcp-voice-bridge.js"],
+      "enabled": true,
+      "environment": {
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}
