@@ -1,16 +1,16 @@
 {
-  "name": "mcp-voice-bridge",
+  "name": "jarrvis",
   "version": "1.0.0",
   "description": "MCP server enabling AI agents (Claude Code, Codex, Devin) to communicate with users via microphone and speaker",
   "main": "src/server.js",
   "type": "module",
   "bin": {
-    "mcp-voice-bridge": "bin/mcp-voice-bridge.js"
+    "jarrvis": "bin/mcp-voice-bridge.js"
   },
   "scripts": {
     "start": "node bin/mcp-voice-bridge.js",
     "dev": "node --watch bin/mcp-voice-bridge.js",
-    "test:speak": "python python/speak.py \"Xin chào, tôi là Voice Bridge\" vi-VN",
+    "test:speak": "python python/speak.py \"Xin chào, tôi là Jarrvis\" vi-VN",
     "test:listen": "python python/listen.py vi-VN 15",
     "test:devices": "python python/devices.py"
   },

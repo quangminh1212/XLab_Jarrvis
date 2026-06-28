@@ -151,7 +151,7 @@ function mkError(msg) {
 // ── MCP Server ────────────────────────────────────────────────────────────────
 export async function createServer() {
   const server = new Server(
-    { name: 'mcp-voice-bridge', version: '1.0.0' },
+    { name: 'jarrvis', version: '1.0.0' },
     { capabilities: { tools: {} } }
   );
 

@@ -1,4 +1,4 @@
-# mcp-voice-bridge
+# jarrvis
 
 > MCP server cho phép AI agents (Claude Code, Codex, Devin, ...) nói chuyện trực tiếp với bạn qua **microphone** và **loa**.
 
@@ -31,7 +31,7 @@ pip install sounddevice numpy SpeechRecognition edge-tts
 
 ```bash
 git clone <repo>
-cd mcp-voice-bridge
+cd XLab_Jarrvis
 npm install
 ```
 
@@ -48,7 +48,7 @@ cp .env.example .env
 # Kiểm tra thiết bị âm thanh
 npm run test:devices
 
-# Thử TTS
+# Thử TTS (Jarrvis sẽ lên tiếng)
 npm run test:speak
 
 # Thử ghi âm + nhận dạng (nói sau khi thấy [Listening...])
@@ -64,7 +64,7 @@ npm run test:listen
 ```json
 {
   "mcpServers": {
-    "voice-bridge": {
+    "jarrvis": {
       "command": "node",
       "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"],
       "env": {
@@ -84,7 +84,7 @@ Vị trí file config:
 ```json
 {
   "mcpServers": {
-    "voice-bridge": {
+    "jarrvis": {
       "command": "node",
       "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"],
       "env": {
@@ -100,7 +100,7 @@ Vị trí file config:
 ```json
 {
   "mcpServers": {
-    "voice-bridge": {
+    "jarrvis": {
       "command": "node",
       "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"]
     }
@@ -152,7 +152,7 @@ Không có tham số. Trả về danh sách thiết bị âm thanh trên máy.
 ## Cấu trúc dự án
 
 ```
-mcp-voice-bridge/
+jarrvis/
 ├── bin/
 │   └── mcp-voice-bridge.js   # CLI entry point (MCP stdio server)
 ├── src/

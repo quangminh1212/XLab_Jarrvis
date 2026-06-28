@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
- * MCP Voice Bridge – CLI entry point
+ * Jarrvis – MCP Voice Bridge CLI entry point
  *
  * Run standalone:  node bin/mcp-voice-bridge.js
- * Run via npx:     npx mcp-voice-bridge
+ * Run via npx:     npx jarrvis
  *
  * Configure in Claude Desktop (claude_desktop_config.json):
  *   "mcpServers": {
- *     "voice-bridge": {
+ *     "jarrvis": {
  *       "command": "node",
- *       "args": ["/path/to/mcp-voice-bridge/bin/mcp-voice-bridge.js"],
+ *       "args": ["/path/to/XLab_Jarrvis/bin/mcp-voice-bridge.js"],
  *       "env": { "VOICE_LANGUAGE": "vi-VN" }
  *     }
  *   }
@@ -25,6 +25,6 @@ process.env.PYTHONIOENCODING = process.env.PYTHONIOENCODING || 'utf-8';
 process.env.PYTHONUTF8 = '1';
 
 startServer().catch((err) => {
-  process.stderr.write(`[mcp-voice-bridge] Fatal: ${err.message}\n`);
+  process.stderr.write(`[jarrvis] Fatal: ${err.message}\n`);
   process.exit(1);
 });
