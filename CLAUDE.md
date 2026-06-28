@@ -106,9 +106,9 @@ npm run test:listen        # Test mic recording + STT
 | `voice_ask(question, timeout_seconds?, language?)` | Speak question, wait for spoken answer |
 | `list_audio_devices()` | List microphones and speakers |
 
-## Supported Languages (BCP-47)
+## Supported Languages (40+ BCP-47 codes)
 
-`vi-VN` (default), `en-US`, `en-GB`, `ja-JP`, `zh-CN`, `ko-KR`
+`vi-VN` (default), `en-US`/`en-GB`/`en-AU`/`en-CA`/`en-IN`, `zh-CN`/`zh-TW`/`zh-HK`, `ja-JP`, `ko-KR`, `fr-FR`/`fr-CA`, `de-DE`/`de-AT`, `es-ES`/`es-MX`/`es-US`/`es-AR`, `it-IT`, `pt-PT`/`pt-BR`, `ru-RU`, `nl-NL`, `pl-PL`, `sv-SE`, `nb-NO`, `da-DK`, `fi-FI`, `cs-CZ`, `el-GR`, `uk-UA`, `ro-RO`, `hu-HU`, `ar-SA`/`ar-EG`/`ar-AE`, `he-IL`, `tr-TR`, `hi-IN`, `bn-IN`, `ta-IN`, `te-IN`, `th-TH`, `id-ID`, `ms-MY`, `fil-PH`, and more.
 
 ## Slash Commands (Claude Code Skills)
 

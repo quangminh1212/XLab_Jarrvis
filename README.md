@@ -175,16 +175,29 @@ Không có tham số. Trả về danh sách thiết bị âm thanh trên máy.
 
 ---
 
-## Ngôn ngữ được hỗ trợ
+## Ngôn ngữ được hỗ trợ (40+)
 
-| Code | Ngôn ngữ | Giọng edge-tts |
-|---|---|---|
-| `vi-VN` | Tiếng Việt | HoaiMyNeural |
-| `en-US` | English (US) | AriaNeural |
-| `en-GB` | English (UK) | SoniaNeural |
-| `ja-JP` | 日本語 | NanamiNeural |
-| `zh-CN` | 中文 | XiaoxiaoNeural |
-| `ko-KR` | 한국어 | SunHiNeural |
+Jarrvis hỗ trợ **hơn 40 ngôn ngữ** cho cả TTS (edge-tts) và STT (Google Speech Recognition):
+
+| Nhóm | Mã ngôn ngữ |
+|------|-------------|
+| **Tiếng Việt** | `vi-VN` (mặc định) |
+| **English** | `en-US`, `en-GB`, `en-AU`, `en-CA`, `en-IN`, `en-IE`, `en-ZA`, `en-NZ`, `en-PH`, `en-SG` |
+| **Chinese** | `zh-CN`, `zh-TW`, `zh-HK` |
+| **Japanese / Korean** | `ja-JP`, `ko-KR` |
+| **French** | `fr-FR`, `fr-CA`, `fr-CH`, `fr-BE` |
+| **German** | `de-DE`, `de-AT`, `de-CH` |
+| **Spanish** | `es-ES`, `es-MX`, `es-US`, `es-AR`, `es-CO`, `es-CL`, `es-PE`, `es-VE`, + 8 biến thể khác |
+| **Portuguese** | `pt-PT`, `pt-BR` |
+| **Italian** | `it-IT` |
+| **Russian** | `ru-RU` |
+| **Dutch / Polish / Nordic** | `nl-NL`, `pl-PL`, `sv-SE`, `nb-NO`, `da-DK`, `fi-FI` |
+| **Eastern European** | `cs-CZ`, `el-GR`, `uk-UA`, `ro-RO`, `hu-HU`, `sk-SK`, `bg-BG`, `hr-HR`, `ca-ES` |
+| **Arabic / Hebrew / Turkish** | `ar-SA`, `ar-EG`, `ar-AE`, `he-IL`, `tr-TR` |
+| **Indian languages** | `hi-IN`, `bn-IN`, `ta-IN`, `te-IN` |
+| **Southeast Asia** | `th-TH`, `id-ID`, `ms-MY`, `fil-PH` |
+
+Xem danh sách đầy đủ và giọng edge-tts tương ứng trong skill `/voice`.
 
 ---
 

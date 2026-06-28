@@ -15,7 +15,9 @@ const TOOLS = [
     description:
       'Speak text aloud to the user via text-to-speech. ' +
       'Use this to communicate information, ask questions verbally, or give voice feedback. ' +
-      'Supports Vietnamese (vi-VN), English (en-US/en-GB), Japanese (ja-JP), Chinese (zh-CN).',
+      'Supports 40+ languages: vi-VN, en-US/en-GB/en-AU/en-CA/en-IN, zh-CN/zh-TW/zh-HK, ja-JP, ko-KR, ' +
+      'fr-FR/fr-CA, de-DE, es-ES/es-MX/es-US, it-IT, pt-PT/pt-BR, ru-RU, nl-NL, pl-PL, sv-SE, ' +
+      'ar-SA, hi-IN, th-TH, id-ID, ms-MY, tr-TR, and many more.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -26,7 +28,8 @@ const TOOLS = [
         language: {
           type: 'string',
           description:
-            'BCP-47 language code, e.g. vi-VN (default), en-US, ja-JP.',
+            'BCP-47 language code, e.g. vi-VN (default), en-US, en-GB, ja-JP, zh-CN, ko-KR, ' +
+            'fr-FR, de-DE, es-ES, it-IT, pt-BR, ru-RU, ar-SA, hi-IN, th-TH, id-ID, and 40+ more.',
           default: 'vi-VN',
         },
       },
@@ -50,7 +53,8 @@ const TOOLS = [
         language: {
           type: 'string',
           description:
-            'BCP-47 language code for recognition, e.g. vi-VN (default), en-US.',
+            'BCP-47 language code for recognition, e.g. vi-VN (default), en-US, ja-JP, zh-CN, ' +
+            'fr-FR, de-DE, es-ES, ko-KR, ar-SA, hi-IN, th-TH, id-ID, and 40+ more.',
           default: 'vi-VN',
         },
       },
@@ -68,7 +72,8 @@ const TOOLS = [
         language: {
           type: 'string',
           description:
-            'BCP-47 language code for recognition, e.g. vi-VN (default), en-US.',
+            'BCP-47 language code for recognition, e.g. vi-VN (default), en-US, ja-JP, zh-CN, ' +
+            'fr-FR, de-DE, es-ES, ko-KR, ar-SA, hi-IN, th-TH, id-ID, and 40+ more.',
           default: 'vi-VN',
         },
       },
@@ -95,7 +100,8 @@ const TOOLS = [
         language: {
           type: 'string',
           description:
-            'BCP-47 language code for both TTS and STT (default: vi-VN).',
+            'BCP-47 language code for both TTS and STT (default: vi-VN). ' +
+            'Supports 40+ languages: en-US, ja-JP, zh-CN, fr-FR, de-DE, es-ES, ko-KR, etc.',
           default: 'vi-VN',
         },
       },

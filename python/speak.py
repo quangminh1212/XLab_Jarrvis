@@ -16,17 +16,158 @@ import os
 import time
 
 VOICE_MAP = {
+    # Vietnamese
     'vi-VN': 'vi-VN-HoaiMyNeural',
     'vi': 'vi-VN-HoaiMyNeural',
+    # English
     'en-US': 'en-US-AriaNeural',
     'en': 'en-US-AriaNeural',
     'en-GB': 'en-GB-SoniaNeural',
-    'ja-JP': 'ja-JP-NanamiNeural',
-    'ja': 'ja-JP-NanamiNeural',
+    'en-AU': 'en-AU-NatashaNeural',
+    'en-CA': 'en-CA-ClaraNeural',
+    'en-IN': 'en-IN-NeerjaNeural',
+    'en-IE': 'en-IE-EmilyNeural',
+    'en-ZA': 'en-ZA-LeahNeural',
+    'en-NZ': 'en-NZ-MollyNeural',
+    'en-PH': 'en-PH-RosaNeural',
+    'en-SG': 'en-SG-LunaNeural',
+    # Chinese
     'zh-CN': 'zh-CN-XiaoxiaoNeural',
     'zh': 'zh-CN-XiaoxiaoNeural',
+    'zh-TW': 'zh-TW-HsiaoChenNeural',
+    'zh-HK': 'zh-HK-HiuMaanNeural',
+    # Japanese
+    'ja-JP': 'ja-JP-NanamiNeural',
+    'ja': 'ja-JP-NanamiNeural',
+    # Korean
     'ko-KR': 'ko-KR-SunHiNeural',
     'ko': 'ko-KR-SunHiNeural',
+    # French
+    'fr-FR': 'fr-FR-DeniseNeural',
+    'fr': 'fr-FR-DeniseNeural',
+    'fr-CA': 'fr-CA-SylvieNeural',
+    'fr-CH': 'fr-CH-AurelieNeural',
+    'fr-BE': 'fr-BE-CharlineNeural',
+    # German
+    'de-DE': 'de-DE-KatjaNeural',
+    'de': 'de-DE-KatjaNeural',
+    'de-AT': 'de-AT-IngridNeural',
+    'de-CH': 'de-CH-LeniNeural',
+    # Spanish
+    'es-ES': 'es-ES-ElviraNeural',
+    'es': 'es-ES-ElviraNeural',
+    'es-MX': 'es-MX-DaliaNeural',
+    'es-US': 'es-US-PalomaNeural',
+    'es-AR': 'es-AR-ElenaNeural',
+    'es-CO': 'es-CO-SalomeNeural',
+    'es-CL': 'es-CL-CatalinaNeural',
+    # Italian
+    'it-IT': 'it-IT-ElsaNeural',
+    'it': 'it-IT-ElsaNeural',
+    # Portuguese
+    'pt-PT': 'pt-PT-RaquelNeural',
+    'pt': 'pt-PT-RaquelNeural',
+    'pt-BR': 'pt-BR-FranciscaNeural',
+    # Russian
+    'ru-RU': 'ru-RU-SvetlanaNeural',
+    'ru': 'ru-RU-SvetlanaNeural',
+    # Dutch
+    'nl-NL': 'nl-NL-ColetteNeural',
+    'nl': 'nl-NL-ColetteNeural',
+    'nl-BE': 'nl-BE-ArnaudNeural',
+    # Polish
+    'pl-PL': 'pl-PL-ZofiaNeural',
+    'pl': 'pl-PL-ZofiaNeural',
+    # Swedish
+    'sv-SE': 'sv-SE-SofieNeural',
+    'sv': 'sv-SE-SofieNeural',
+    # Norwegian
+    'nb-NO': 'nb-NO-PernilleNeural',
+    'no': 'nb-NO-PernilleNeural',
+    # Danish
+    'da-DK': 'da-DK-ChristelNeural',
+    'da': 'da-DK-ChristelNeural',
+    # Finnish
+    'fi-FI': 'fi-FI-SelmaNeural',
+    'fi': 'fi-FI-SelmaNeural',
+    # Czech
+    'cs-CZ': 'cs-CZ-VlastaNeural',
+    'cs': 'cs-CZ-VlastaNeural',
+    # Greek
+    'el-GR': 'el-GR-AthinaNeural',
+    'el': 'el-GR-AthinaNeural',
+    # Turkish
+    'tr-TR': 'tr-TR-EmelNeural',
+    'tr': 'tr-TR-EmelNeural',
+    # Arabic
+    'ar-SA': 'ar-SA-ZariyahNeural',
+    'ar': 'ar-SA-ZariyahNeural',
+    'ar-EG': 'ar-EG-SalmaNeural',
+    'ar-AE': 'ar-AE-FatimaNeural',
+    # Hebrew
+    'he-IL': 'he-IL-HilaNeural',
+    'he': 'he-IL-HilaNeural',
+    # Hindi
+    'hi-IN': 'hi-IN-SwaraNeural',
+    'hi': 'hi-IN-SwaraNeural',
+    # Bengali
+    'bn-IN': 'bn-IN-TanishaaNeural',
+    'bn': 'bn-IN-TanishaaNeural',
+    # Tamil
+    'ta-IN': 'ta-IN-PallaviNeural',
+    'ta': 'ta-IN-PallaviNeural',
+    # Telugu
+    'te-IN': 'te-IN-ShrutiNeural',
+    'te': 'te-IN-ShrutiNeural',
+    # Thai
+    'th-TH': 'th-TH-PremwadeeNeural',
+    'th': 'th-TH-PremwadeeNeural',
+    # Indonesian
+    'id-ID': 'id-ID-GadisNeural',
+    'id': 'id-ID-GadisNeural',
+    # Malay
+    'ms-MY': 'ms-MY-YasminNeural',
+    'ms': 'ms-MY-YasminNeural',
+    # Filipino
+    'fil-PH': 'fil-PH-BlessicaNeural',
+    'fil': 'fil-PH-BlessicaNeural',
+    # Ukrainian
+    'uk-UA': 'uk-UA-PolinaNeural',
+    'uk': 'uk-UA-PolinaNeural',
+    # Romanian
+    'ro-RO': 'ro-RO-AlinaNeural',
+    'ro': 'ro-RO-AlinaNeural',
+    # Hungarian
+    'hu-HU': 'hu-HU-NoemiNeural',
+    'hu': 'hu-HU-NoemiNeural',
+    # Slovak
+    'sk-SK': 'sk-SK-ViktoriaNeural',
+    'sk': 'sk-SK-ViktoriaNeural',
+    # Bulgarian
+    'bg-BG': 'bg-BG-KalinaNeural',
+    'bg': 'bg-BG-KalinaNeural',
+    # Croatian
+    'hr-HR': 'hr-HR-GabrijelaNeural',
+    'hr': 'hr-HR-GabrijelaNeural',
+    # Catalan
+    'ca-ES': 'ca-ES-JoanaNeural',
+    'ca': 'ca-ES-JoanaNeural',
+    # Finnish already above
+    # Latin American Spanish variants
+    'es-PE': 'es-PE-CamilaNeural',
+    'es-VE': 'es-VE-PaolaNeural',
+    'es-UY': 'es-UY-ValentinaNeural',
+    'es-PR': 'es-PR-KarinaNeural',
+    'es-DO': 'es-DO-RamonaNeural',
+    'es-EC': 'es-EC-AndreaNeural',
+    'es-GT': 'es-GT-MartaNeural',
+    'es-BO': 'es-BO-MarcelaNeural',
+    'es-PY': 'es-PY-TaniaNeural',
+    'es-CR': 'es-CR-MariaNeural',
+    'es-PA': 'es-PA-MargaritaNeural',
+    'es-HN': 'es-HN-KarlaNeural',
+    'es-NI': 'es-NI-YolandaNeural',
+    'es-SV': 'es-SV-LorenaNeural',
 }
 
 
