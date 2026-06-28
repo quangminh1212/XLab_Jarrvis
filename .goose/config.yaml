@@ -1,0 +1,11 @@
+extensions:
+  - name: jarrvis
+    enabled: true
+    transport:
+      type: stdio
+      command: node
+      args:
+        - bin/mcp-voice-bridge.js
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
