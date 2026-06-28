@@ -59,6 +59,52 @@ npm run test:listen
 
 ## Tích hợp với AI Agents
 
+Repo đã có sẵn **config files cho tất cả CLI agents** — chỉ cần `cd XLab_Jarrvis` rồi khởi động agent là tự động load.
+
+### Agents tự động nhận diện (Auto-discovery)
+
+| Agent | Cách dùng | File config tự động |
+|-------|-----------|---------------------|
+| **Claude Code** | `claude` | `.mcp.json` + `.claude/` |
+| **OpenAI Codex** | `codex` | `.codex/config.toml` |
+| **Mistral Vibe** | `vibe` | `.vibe/config.toml` |
+| **Gemini CLI** | `gemini` | `.gemini/settings.json` |
+| **Goose** | `goose` | `.goose/config.yaml` |
+| **OpenCode** | `opencode` | `opencode.json` |
+| **Cursor** | Mở project folder | `.cursor/mcp.json` |
+| **Windsurf / Devin** | Mở project | `.mcp.json` |
+
+### Hermes (NousResearch) — cần cấu hình global
+
+Hermes chưa hỗ trợ project-level config. Thêm vào `~/.hermes/config.yaml`:
+
+```yaml
+mcp_servers:
+  jarrvis:
+    command: node
+    args:
+      - C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+```
+
+Hoặc dùng CLI (từ thư mục dự án):
+```bash
+hermes mcp add jarrvis node bin/mcp-voice-bridge.js
+```
+
+### OpenClaw — cần cấu hình global
+
+```bash
+# Chạy từ thư mục dự án
+openclaw mcp add jarrvis --command "node" --args "bin/mcp-voice-bridge.js" \
+  --env PYTHONUTF8=1 --env PYTHONIOENCODING=utf-8
+
+# Kiểm tra
+openclaw mcp status
+```
+
 ### Claude Desktop (`claude_desktop_config.json`)
 
 ```json
@@ -67,46 +113,15 @@ npm run test:listen
     "jarrvis": {
       "command": "node",
       "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"],
-      "env": {
-        "VOICE_LANGUAGE": "vi-VN"
-      }
+      "env": { "VOICE_LANGUAGE": "vi-VN" }
     }
   }
 }
 ```
 
-Vị trí file config:
+Vị trí:
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-### Windsurf / Devin (MCP config)
-
-```json
-{
-  "mcpServers": {
-    "jarrvis": {
-      "command": "node",
-      "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"],
-      "env": {
-        "VOICE_LANGUAGE": "vi-VN"
-      }
-    }
-  }
-}
-```
-
-### Cursor / VS Code (cline, roo-code, v0)
-
-```json
-{
-  "mcpServers": {
-    "jarrvis": {
-      "command": "node",
-      "args": ["C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js"]
-    }
-  }
-}
-```
 
 ---
 

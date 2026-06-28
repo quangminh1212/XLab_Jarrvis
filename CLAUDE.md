@@ -14,6 +14,51 @@ npm install
 node bin/mcp-voice-bridge.js   # starts the MCP stdio server
 ```
 
+## Agent Auto-Discovery (project-level config files)
+
+| Agent | Config file | Auto-load |
+|-------|-------------|-----------|
+| Claude Code | `.mcp.json` + `.claude/settings.json` | Yes — just run `claude` |
+| OpenAI Codex | `.codex/config.toml` | Yes |
+| Mistral Vibe | `.vibe/config.toml` | Yes |
+| Gemini CLI | `.gemini/settings.json` | Yes |
+| Goose | `.goose/config.yaml` | Yes |
+| OpenCode | `opencode.json` | Yes |
+| Cursor | `.cursor/mcp.json` | Yes |
+| **Hermes** | *global only* | Manual — see below |
+| **OpenClaw** | *global only* | Manual — see below |
+
+### Hermes (NousResearch) — global setup
+
+Hermes does not support project-level MCP config yet. Add manually to `~/.hermes/config.yaml`:
+
+```yaml
+mcp_servers:
+  jarrvis:
+    command: node
+    args:
+      - C:/Dev/XLab_Jarrvis/bin/mcp-voice-bridge.js
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+```
+
+Or use the Hermes CLI (from the project directory):
+```bash
+hermes mcp add jarrvis node bin/mcp-voice-bridge.js
+```
+
+### OpenClaw — global setup
+
+OpenClaw manages MCP servers via CLI:
+```bash
+# From the project directory
+openclaw mcp add jarrvis --command "node" --args "bin/mcp-voice-bridge.js" --env PYTHONUTF8=1 --env PYTHONIOENCODING=utf-8
+
+# Verify
+openclaw mcp status
+```
+
 The repo includes `.mcp.json`, so Claude Code auto-discovers the server when opened from this directory:
 ```bash
 cd XLab_Jarrvis
