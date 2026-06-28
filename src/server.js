@@ -57,6 +57,24 @@ const TOOLS = [
     },
   },
   {
+    name: 'voice_wait_for_speech',
+    description:
+      'Continuously listen for the user to start speaking, record until they pause, then transcribe. ' +
+      'This tool blocks until the user has spoken and finished an utterance. ' +
+      'Use it for always-on voice conversations where the agent should wait for the user to speak.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        language: {
+          type: 'string',
+          description:
+            'BCP-47 language code for recognition, e.g. vi-VN (default), en-US.',
+          default: 'vi-VN',
+        },
+      },
+    },
+  },
+  {
     name: 'voice_ask',
     description:
       'Ask the user a question by speaking it aloud, then wait for and transcribe their spoken response. ' +
@@ -179,10 +197,23 @@ export async function createServer() {
           const lang = resolveLanguage(args);
           const result = await runPython(
             'listen.py',
-            [lang, timeout, config.micIndex],
+            [lang, timeout, config.micIndex, 0],
             (timeout + 15) * 1000
           );
           if (!result) return mkText('[voice] No speech detected (silence or timeout)');
+          return mkText(result);
+        }
+
+        // ── voice_wait_for_speech ───────────────────────────────────────────
+        case 'voice_wait_for_speech': {
+          const lang = resolveLanguage(args);
+          // No timeout in this mode; wait indefinitely until speech + silence
+          const result = await runPython(
+            'listen.py',
+            [lang, 0, config.micIndex, 1],
+            300_000 // hard cap at 5 minutes per Python run
+          );
+          if (!result) return mkText('[voice] No speech detected');
           return mkText(result);
         }
 

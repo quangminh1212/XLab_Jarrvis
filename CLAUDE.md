@@ -14,6 +14,12 @@ npm install
 node bin/mcp-voice-bridge.js   # starts the MCP stdio server
 ```
 
+## Always-On Voice Conversation
+
+The new tool `voice_wait_for_speech` is designed for hands-free voice chats. Unlike `voice_listen` (which times out), it will **block indefinitely** until the user starts speaking, record the whole utterance, and return the transcript. Combine it with `voice_speak` in a loop to build a continuous voice conversation.
+
+Use the `/voice-chat` slash command to tell Claude Code to enter this loop automatically.
+
 ## Agent Auto-Discovery (project-level config files)
 
 | Agent | Config file | Auto-load |
@@ -95,7 +101,8 @@ npm run test:listen        # Test mic recording + STT
 | Tool | Description |
 |------|-------------|
 | `voice_speak(text, language?)` | Speak text to user (TTS) |
-| `voice_listen(timeout_seconds?, language?)` | Record mic + transcribe (STT) |
+| `voice_listen(timeout_seconds?, language?)` | Record mic + transcribe (STT) with a timeout |
+| `voice_wait_for_speech(language?)` | **Always-on listen**: blocks until the user speaks and finishes, then transcribes |
 | `voice_ask(question, timeout_seconds?, language?)` | Speak question, wait for spoken answer |
 | `list_audio_devices()` | List microphones and speakers |
 
@@ -106,6 +113,7 @@ npm run test:listen        # Test mic recording + STT
 ## Slash Commands (Claude Code Skills)
 
 - `/listen` — activate microphone and listen to user
+- `/voice-chat` — enter an always-on voice conversation loop: listen → respond → speak → repeat
 - `/voice [lang]` — change TTS language/voice
 
 ## Configuration

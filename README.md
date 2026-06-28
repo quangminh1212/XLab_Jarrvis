@@ -57,6 +57,30 @@ npm run test:listen
 
 ---
 
+## Chế độ trò chuyện bằng giọng nói liên tục (Always-On)
+
+Muốn agent **luôn nghe** và tự động trả lời khi bạn nói xong? Dùng tool `voice_wait_for_speech` trong vòng lặp:
+
+```
+voice_wait_for_speech → hiểu ý → voice_speak → voice_wait_for_speech → ...
+```
+
+Tool này khác `voice_listen` ở chỗ **không timeout khi im lặng** — nó sẽ chờ đến khi bạn bắt đầu nói, ghi âm đến khi bạn dừng, rồi trả về văn bản.
+
+### Với Claude Code
+
+Gõ lệnh `/voice-chat` để bắt đầu chế độ trò chuyện giọng nói liên tục. Nói "thôi" / "tạm biệt" / "bye" để kết thúc.
+
+### Với các agent khác
+
+Thêm vào system prompt của agent:
+
+```
+When the user wants voice chat mode, repeatedly call voice_wait_for_speech, then respond using voice_speak, then loop again. Stop when the user says goodbye or asks to stop.
+```
+
+---
+
 ## Tích hợp với AI Agents
 
 Repo đã có sẵn **config files cho tất cả CLI agents** — chỉ cần `cd XLab_Jarrvis` rồi khởi động agent là tự động load.

@@ -3,10 +3,11 @@
 Voice recording + STT helper script for MCP Voice Bridge.
 Records audio from microphone using VAD, transcribes via Google Speech.
 
-Usage: python listen.py [language] [timeout_seconds] [mic_index]
+Usage: python listen.py [language] [timeout_seconds] [mic_index] [wait_for_speech]
   language:        BCP-47 code (default: vi-VN)
-  timeout_seconds: max wait time (default: 30)
+  timeout_seconds: max wait time (default: 30, 0 = infinite)
   mic_index:       device index (-1 = default, default: -1)
+  wait_for_speech: 1 = keep listening silently until speech detected, then record until silence
 
 Output: transcribed text on stdout (empty if nothing heard)
 """
@@ -47,14 +48,17 @@ def chime_done():
 LANGUAGE = sys.argv[1] if len(sys.argv) > 1 else 'vi-VN'
 TIMEOUT = float(sys.argv[2]) if len(sys.argv) > 2 else 30.0
 MIC_INDEX = int(sys.argv[3]) if len(sys.argv) > 3 else -1
+WAIT_FOR_SPEECH = bool(int(sys.argv[4])) if len(sys.argv) > 4 else False
 
 # ── VAD / Audio constants ─────────────────────────────────────────────────────
 FS = 16000          # sample rate Hz
 CHUNK_SEC = 0.08    # chunk duration (80ms for responsive VAD)
 SILENCE_SEC = 1.0   # silence duration to consider speech ended
-MIN_SPEECH_SEC = 0.4  # minimum speech duration to bother transcribing
-THRESHOLD = 0.008   # RMS threshold (post-gain)
-GAIN = 20.0         # microphone gain multiplier
+MIN_SPEECH_SEC = 0.8  # minimum speech duration to bother transcribing (noise spikes are short)
+THRESHOLD = 0.003   # RMS threshold (post-gain) - lowered
+GAIN = 45.0         # microphone gain multiplier - increased
+NOISE_FLOOR_SEC = 1.5  # warm-up period to ignore background noise at start
+DYNAMIC_THRESHOLD_MULT = 1.5  # threshold = max_observed_noise * this multiplier
 
 
 def record_with_vad() -> np.ndarray | None:
@@ -64,11 +68,18 @@ def record_with_vad() -> np.ndarray | None:
     speaking = False
     silence_start = None
     start_time = time.time()
+    warm_up_until = time.time() + NOISE_FLOOR_SEC
+    indefinite = WAIT_FOR_SPEECH and TIMEOUT <= 0
+    noise_samples = []
+    threshold = THRESHOLD
 
-    print(f"[listen] lang={LANGUAGE} timeout={TIMEOUT}s mic={MIC_INDEX}", file=sys.stderr, flush=True)
+    print(f"[listen] lang={LANGUAGE} wait_for_speech={WAIT_FOR_SPEECH} timeout={TIMEOUT if TIMEOUT > 0 else 'inf'}s mic={MIC_INDEX}", file=sys.stderr, flush=True)
     chime_listening()  # rising chime = mic active
 
-    while time.time() - start_time < TIMEOUT:
+    while indefinite or (time.time() - start_time < TIMEOUT):
+        # Debug: print rms periodically while waiting in indefinite mode
+        if WAIT_FOR_SPEECH and not speaking and time.time() > warm_up_until and (int(time.time() * 2) % 5 == 0):
+            pass
         # Record one chunk
         chunk = sd.rec(
             int(CHUNK_SEC * FS),
@@ -84,7 +95,23 @@ def record_with_vad() -> np.ndarray | None:
         chunk_boosted = np.clip(chunk * GAIN, -1.0, 1.0)
         rms = float(np.sqrt(np.mean(chunk_boosted ** 2)))
 
-        if rms > THRESHOLD:
+        # Calibrate dynamic threshold from warm-up noise
+        if WAIT_FOR_SPEECH and time.time() < warm_up_until:
+            noise_samples.append(rms)
+            if len(noise_samples) > 5:
+                observed_max = float(np.max(noise_samples[-10:]))
+                threshold = max(THRESHOLD, observed_max * DYNAMIC_THRESHOLD_MULT)
+            print(f"[listen] warm-up rms={rms:.4f} threshold={threshold:.4f}", file=sys.stderr, flush=True)
+            continue
+
+        # Debug log during indefinite wait
+        if WAIT_FOR_SPEECH and not speaking and (int(time.time() * 10) % 50 == 0):
+            print(f"[listen] waiting rms={rms:.4f} threshold={threshold:.4f}", file=sys.stderr, flush=True)
+
+        if rms > threshold:
+            # Skip warm-up noise in wait_for_speech mode
+            if WAIT_FOR_SPEECH and not speaking and time.time() < warm_up_until:
+                continue
             if not speaking:
                 print("[listen] speech detected", file=sys.stderr, flush=True)
                 speaking = True
@@ -104,6 +131,8 @@ def record_with_vad() -> np.ndarray | None:
                     buffer = []
                     speaking = False
                     silence_start = None
+                    if WAIT_FOR_SPEECH:
+                        warm_up_until = time.time() + NOISE_FLOOR_SEC
             buffer.append(chunk_boosted)
 
     # Timeout: return whatever speech we have (if any)
