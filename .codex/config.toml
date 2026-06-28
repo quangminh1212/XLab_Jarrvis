@@ -1,0 +1,7 @@
+[mcp_servers.jarrvis]
+command = "node"
+args = ["bin/mcp-voice-bridge.js"]
+
+[mcp_servers.jarrvis.env]
+PYTHONUTF8 = "1"
+PYTHONIOENCODING = "utf-8"
