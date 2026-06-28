@@ -1,0 +1,38 @@
+{
+  "name": "mcp-voice-bridge",
+  "version": "1.0.0",
+  "description": "MCP server enabling AI agents (Claude Code, Codex, Devin) to communicate with users via microphone and speaker",
+  "main": "src/server.js",
+  "type": "module",
+  "bin": {
+    "mcp-voice-bridge": "bin/mcp-voice-bridge.js"
+  },
+  "scripts": {
+    "start": "node bin/mcp-voice-bridge.js",
+    "dev": "node --watch bin/mcp-voice-bridge.js",
+    "test:speak": "python python/speak.py \"Xin chào, tôi là Voice Bridge\" vi-VN",
+    "test:listen": "python python/listen.py vi-VN 15",
+    "test:devices": "python python/devices.py"
+  },
+  "keywords": [
+    "mcp",
+    "voice",
+    "speech",
+    "ai-agent",
+    "microphone",
+    "tts",
+    "stt",
+    "claude",
+    "codex",
+    "devin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^16.4.7"
+  }
+}
